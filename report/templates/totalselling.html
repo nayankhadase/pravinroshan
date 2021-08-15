@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Product Selling{% endblock title %}
+{% block css %}
+  <style>
+    #prodqty{
+      display: inline !important;
+      width: 70% !important;
+    }
+    .aqty{
+      background-color: rgb(43 242 122);
+      padding: 16px 10px;
+
+    }
+  </style>
+{% endblock css %}
+{% block body %}
+<!-- message -->
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Alert: </strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+{% endif %}
+
+
+
+ <!-- todays start -->
+  <div class="container mb-3">
+    <div class="row">
+      <div class="col-md-7 m-auto ">
+        <h2>Product selling</h2>
+        <form action="prodselling" id="addqty" method="POST">
+            {% csrf_token %}
+           
+            <select class="form-select" aria-label="Default select example" name='rawtype' id="rawtype" required> 
+              <option value="0">Select the Type of Product</option>
+              {% for t in ptype %}
+              <option value="{{t.id}}">{{t.name}}</option>
+              {% endfor %}
+            </select> <br>
+
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="prodqty" id="prodqty" placeholder="Enter Quantity" required >
+              <label for="prodqty">Enter Quantity</label>
+              <span class="aqty">Available QTY: XXX </span>
+            </div> <br>
+
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="price" id="price" placeholder="Selling Price per product"  required>
+              <label for="price">Selling Price per product</label>
+            </div> <br>
+
+            <div class="form-floating" id="manuprice">
+              <input type="tel" class="form-control" name="mprice" id="mprice" placeholder="manufacturing Price per product"  required>
+              <label for="mprice">manufacturing Price per product</label>
+            </div> <br>
+              
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="totalprice" id="totalprice" placeholder="Total price" required>
+              <label for="totalprice">Total price</label>
+            </div> <br>
+
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="totalprofit" id="totalprofit" placeholder="Total Profit" required>
+              <label for="totalprofit">Total Profit</label>
+            </div> <br>
+
+            <div class="row mb-3">
+                <label for="todaysdate" class="col-sm-2 col-form-label" >Date</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" id="todaysdate" name="todaysdate" required>
+                </div>
+              </div> <br>
+            <button type="submit" class="btn btn-primary">Place order</button>
+          </form>
+          
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(e){
+          e.preventDefault();
+          $.ajax({
+            type:"POST",
+            url:'/getmanucost',
+            data:{
+              name:$("#rawtype").val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(res){
+              $("#manuprice").html(res);
+            }
+          })
+        })
+
+        $("#rawtype").change(function(e){
+          e.preventDefault();
+          $.ajax({
+            type:"POST",
+            url:'/getqty',
+            data:{
+              name:$("#rawtype").val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(resu){
+              $(".aqty").html(resu);
+            }
+          })
+        })
+      
+        $("#price").blur(function(){
+          var qty=$("#prodqty").val();
+          var price=$("#price").val();
+          var mprice=$("#mprice").val();
+          var totalprice=qty * (price);
+          var totalprofit=qty * (price-mprice);
+          
+          $("#totalprice").attr('value',totalprice);
+          $("#totalprofit").attr('value',totalprofit);
+        })
+      }
+    )
+  </script>
+{% endblock body %}  

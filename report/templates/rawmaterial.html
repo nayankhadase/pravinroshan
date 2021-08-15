@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Raw material{% endblock title %}
+{% block body %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Alert</strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+{% endif %}
+
+ <!-- rawmaterial start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Raw material input</h2>
+        <form action="rawmaterialupdate" id="addqty" method="POST">
+          {% csrf_token %}
+          <select class="form-select" aria-label="Default select example" name='rawtype' id="rawtype" required> 
+            <option value="0">Select the Type of material</option>
+            {% for t in ptype %}
+            <option value="{{t.id}}">{{t.name}}</option>
+            {% endfor %}
+          </select> <br>
+          <div class="form-floating">
+            <input type="tel" class="form-control" name="quantity" id="quantity" placeholder="raw material Quantity " required>
+            <label for="quantity">raw material Quantity</label>
+          </div> <br>
+          <div class="form-floating">
+            <input type="tel" class="form-control" name="totalp" id="totalp" placeholder="raw material Quantity " required>
+            <label for="totalp">Total price</label>
+          </div> <br>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+ <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+{% endblock body %}

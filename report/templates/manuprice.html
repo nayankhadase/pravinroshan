@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Product list{% endblock title %}
+{% block body %}
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Alert</strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+{% endif %}
+
+
+ <!-- rawmaterial start -->
+  <div class="container mt-3 mb-3">
+    <div class="row">
+      <div class="col-12">
+        <span class="h2 float-left">Product list</span>
+        <span  style="float: right;"><a href="cleardata" id="deldata" class="btn btn-danger btn-sm">Clear all data</a></span>
+      </div>
+      <div class="col-12">
+        
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">ID</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Description</th>
+                <th scope="col" class="text-center">manufacturing cost</th>
+                <th scope="col" class="text-center">Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+              <tr class="text-center">
+                <th scope="row">{{d.id}}</th>
+                <td >{{d.name}}</td>
+                <td >{{d.disc}}</td>
+                <td>{{d.manucost}}</td>
+                <td><a href="/editmanu/{{d.id}}" class=" btn btn-outline-success btn-sm">Edit</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(
+      function(){
+        $("#deldata").click(function(){
+          return confirm("Do you want to delete all your data ??")
+        })
+      }
+    )
+  </script>
+{% endblock body %}

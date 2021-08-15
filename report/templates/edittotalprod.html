@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Production</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+<body>  
+<!-- message -->
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Warning: </strong> Don't Refresh This Page !!!!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+ <!-- todays start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Edit Production </h2>
+        
+        <form action="/editprod/{{data.id}}" id="addqty" method="POST">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label for="todaysdate" class="col-sm-2 col-form-label">Date</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="todaysdate" name="todaysdate"  value="{{data.date}}" disabled>
+                </div>
+              </div>
+            <select class="form-select" aria-label="Default select example" name='rawtype' id="rawtype" required disabled>
+              {% for t in ptype %}
+                {% if t.id == data.name_id %}
+                  <option value="{{t.id}}">{{t.name}}</option>
+                {% endif %}
+              {% endfor %}
+            </select> <br>
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="produceqty" id="produceqty" placeholder="Produce parts quantity" value="{{data.produce}}" required>
+              <label for="produceqty">Produce parts quantity</label>
+            </div> <br>
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="rejectedqty" id="rejectedqty" placeholder="Rejected Parts quantity" value="{{data.reject}}" required>
+              <label for="rejectedqty">Rejected Parts quantity</label>
+            </div> <br>
+            <button type="submit" class="btn btn-primary">Update Data</button>
+          </form>
+          
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+</body>
+</html>

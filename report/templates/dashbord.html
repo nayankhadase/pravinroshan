@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Dashbord{% endblock title %}
+
+{% block body %} 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-3">
+            <canvas id="mychart" aria-label="chart" role="img"></canvas>
+        </div>
+        <div class="col-md-6 mt-3">
+            <canvas id="sell" aria-label="chart" role="img"></canvas>
+        </div>
+    </div>
+</div>
+<script src="{% static 'js/chart.js' %}"></script>
+<script>
+    // total production
+    var data = JSON.parse("{{data|escapejs}}");
+    var sdata = JSON.parse("{{sdata|escapejs}}");
+    var lengt=Object.keys(data).length;
+    var name_id=new Array();
+    var stock=new Array();
+    for (var i=0;i<lengt;i++)
+    {
+        name_id.push(data[i]);
+        stock.push(sdata[i]);
+    }
+    var can=document.getElementById("mychart").getContext("2d");
+    var mychart=new Chart(can,{
+
+        type:'bar',
+        data:{
+            labels:name_id,
+            datasets:[
+            {
+                data:stock,
+                label:"Quantity",
+                backgroundColor:["#dbb448"]
+            },
+        ],
+        },
+        options:{
+            plugins: {
+            title: {
+                display: true,
+                text: 'In-stock Product',
+                position:"bottom",
+                
+            }
+        },
+        },
+        
+    })
+    // total sell
+    var rndata = JSON.parse("{{rndata|escapejs}}");
+    var rdata = JSON.parse("{{rdata|escapejs}}");
+    var rlengt=Object.keys(rndata).length;
+    var rname_id=new Array();
+    var raw=new Array();
+    for (var i=0;i<rlengt;i++)
+    {
+        rname_id.push(rndata[i]);
+        raw.push(rdata[i]);
+    }
+    var selling=document.getElementById("sell").getContext("2d");
+    var sell=new Chart(selling,{
+        
+        type:'bar',
+        data:{
+            labels:rname_id,
+            datasets:[
+            {
+                data:raw,
+                label:"Quantity",
+                backgroundColor:["green"]
+            },
+        ],
+        },
+        options:{
+            plugins: {
+            title: {
+                display: true,
+                text: 'Available Rawmaterial',
+                position:"bottom",
+                
+            }
+        },
+        },
+        
+    })
+</script>
+{% endblock body %} 

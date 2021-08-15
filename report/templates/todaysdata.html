@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Today's Production{% endblock title %}
+{% block body %}   
+<!-- message -->
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Alert</strong> {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+{% endif %}
+
+
+
+ <!-- todays start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Today's Production </h2>
+        <form action="todaysinput" id="addqty" method="POST">
+            {% csrf_token %}
+            <div class="row mb-3">
+                <label for="todaysdate" class="col-sm-2 col-form-label">Date</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" id="todaysdate" name="todaysdate" required>
+                </div>
+              </div>
+            <select class="form-select" aria-label="Default select example" name='rawtype' id="rawtype" required> 
+              <option value="0">Select the Type of material</option>
+              {% for t in ptype %}
+              <option value="{{t.id}}">{{t.name}}</option>
+              {% endfor %}
+            </select> <br>
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="produceqty" id="produceqty" placeholder="Produce parts quantity" value="0" required>
+              <label for="produceqty">Produce parts quantity</label>
+            </div> <br>
+            <div class="form-floating">
+              <input type="tel" class="form-control" name="rejectedqty" id="rejectedqty" placeholder="Rejected Parts quantity" value="0" required>
+              <label for="rejectedqty">Rejected Parts quantity</label>
+            </div> <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+{% endblock body %}

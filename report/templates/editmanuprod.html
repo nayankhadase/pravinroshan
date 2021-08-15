@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Edit Product{% endblock title %}
+{% block body %}
+
+
+
+ <!-- rawmaterial start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Edit Product</h2>
+        <form action="/editmanu/{{data.id}}" id="addqty" method="POST">
+          {% csrf_token %}
+          
+          <div class="form-floating">
+            <input type="text" class="form-control" name="prodname" id="prodname" placeholder="New Product Name" required value="{{data.name}}" disabled>
+            <label for="prodname">New Product Name </label>
+            <div class="text-danger" id="error" ></div>
+          </div> <br>
+
+          <div class="form-floating">
+            <input type="text" class="form-control" name="proddesc" id="proddesc" placeholder="product Description" required value="{{data.disc}}">
+            <label for="proddesc">product Description(non-warranty LED bulb 12W)</label>
+          </div> <br>
+          <div class="form-floating">
+            <input type="tel" class="form-control" name="mprice" id="mprice" placeholder="Enter the manufacturing cost per item" required value="{{data.manucost}}">
+            <label for="mprice">Enter the manufacturing cost per item</label>
+          </div> <br>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

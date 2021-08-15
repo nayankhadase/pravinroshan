@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Selling Details{% endblock title %}
+{% block body %}   
+ <!-- rawmaterial start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Selling Details</h2>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col" class="text-center">Selling price</th>
+                <th scope="col" class="text-center">Total price</th>
+                <th scope="col" class="text-center">Total Profit</th>
+                <th scope="col" class="text-center">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+              <tr class="text-center">
+                <td>{{d.name}}</td>
+                <td>{{d.sellqty}}</td>
+                <td>{{d.sellingprice}}</td>
+                <td>{{d.totalprice}}</td>
+                <td class="text-success">{{d.totalprofit}}</td>
+                <td>{{d.selldate}}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+  {% endblock body %}  

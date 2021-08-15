@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Instock Quantity{% endblock title %}
+{% block body %}
+ <!-- rawmaterial start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>Instock Quantity</h2>
+        
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" colspan="2" class="text-center">Production</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+              <tr class="text-center">
+                <td>{{d.name}}</td>
+                <td>{{d.produceqty}}</td>
+                <td class="text-danger">{{d.rejectqty}}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+{% endblock body %}

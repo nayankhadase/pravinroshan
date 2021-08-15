@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Total productions{% endblock title %}
+{% block body %} 
+ <!-- rawmaterial start -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2>total productions</h2>
+        
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <!-- <th scope="col" class="text-center">ID</th> -->
+                <th scope="col" class="text-center">Date</th>
+                <th scope="col" class="text-center">Name</th>
+                <th scope="col" colspan="2" class="text-center">Production</th>
+                <th scope="col" class="text-center">Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for d in data %}
+              <tr class="text-center">
+                <!-- <th scope="row">{{d.id}}</th> -->
+                <td >{{d.date}}</td>
+                <td>{{d.name}}</td>
+                <td>{{d.produce}}</td>
+                <td class="text-danger">{{d.reject}}</td>
+                <td><a href="/editprod/{{d.id}}" class=" btn btn-outline-success btn-sm">Edit</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <!-- <script>
+    $(document).ready(
+      function(){
+        $("#rawtype").change(function(){alert($("#rawtype").val())})
+      }
+    )
+  </script> -->
+{% endblock body %}
